@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/NayronFerreira/client-server-api/data"
-	"github.com/NayronFerreira/client-server-api/entity"
+	"github.com/NayronFerreira/client-server-api/internal/data"
+	"github.com/NayronFerreira/client-server-api/internal/domain/entity"
 
 	_ "github.com/mattn/go-sqlite3"
 )

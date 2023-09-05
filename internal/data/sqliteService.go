@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"time"
 
-	"github.com/NayronFerreira/client-server-api/entity"
+	"github.com/NayronFerreira/client-server-api/internal/domain/entity"
 )
 
 func CreateDBConnection() (*sql.DB, error) {
