@@ -6,5 +6,5 @@ import (
 )
 
 func main() {
-	controller.NewCambioController()
+	controller.NewServerCambioController()
 }
