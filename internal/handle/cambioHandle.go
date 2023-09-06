@@ -14,7 +14,7 @@ func CambioHandle(res http.ResponseWriter, req *http.Request) {
 		res.WriteHeader(http.StatusNotFound)
 		return
 	}
-	cambioResponse, err := service.GetCambioUSDToBRLWithContext(req.Context(), res)
+	cambioResponse, err := service.GetCambioUSDToBRLWithReqContext(req.Context(), res)
 	if err != nil {
 		log.Println("Falha ao buscar CambioResponse:", err)
 		http.Error(res, err.Error(), http.StatusInternalServerError)
