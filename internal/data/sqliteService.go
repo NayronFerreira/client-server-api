@@ -17,21 +17,7 @@ func CreateDBConnection() (*sql.DB, error) {
 }
 
 func NewCambioTableIfNecessary(database *sql.DB) (*sql.DB, error) {
-	_, err := database.Exec(`
-    CREATE TABLE IF NOT EXISTS cambio_usdbrl (
-        id INTEGER PRIMARY KEY,
-        code TEXT,
-        codein TEXT,
-        high TEXT,
-        low TEXT,
-        var_bid TEXT,
-        pct_change TEXT,
-        bid TEXT,
-        ask TEXT,
-        timestamp TEXT,
-        created_date TEXT
-    )
-`)
+	_, err := database.Exec(queryCreateCambioTableIfNecessary())
 
 	if err != nil {
 		return nil, err
@@ -66,5 +52,23 @@ func queryInsertCambio() string {
 	VALUES (
 		$1, $2, $3, $4, $5, $6, $7, $8, $9, $10
 	)
+`
+}
+
+func queryCreateCambioTableIfNecessary() string {
+	return `
+    CREATE TABLE IF NOT EXISTS cambio_usdbrl (
+        id INTEGER PRIMARY KEY,
+        code TEXT,
+        codein TEXT,
+        high TEXT,
+        low TEXT,
+        var_bid TEXT,
+        pct_change TEXT,
+        bid TEXT,
+        ask TEXT,
+        timestamp TEXT,
+        created_date TEXT
+    )
 `
 }
