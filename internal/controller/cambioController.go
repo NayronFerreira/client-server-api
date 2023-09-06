@@ -3,11 +3,11 @@ package controller
 import (
 	"net/http"
 
-	"github.com/NayronFerreira/client-server-api/internal/service"
+	"github.com/NayronFerreira/client-server-api/internal/handle"
 )
 
 func NewCambioController() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/cotacao", service.CambioHandle)
+	mux.HandleFunc("/cotacao", handle.CambioHandle)
 	http.ListenAndServe(":8080", mux)
 }
