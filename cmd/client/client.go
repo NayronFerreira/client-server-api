@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Millisecond*300)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Millisecond*600)
 	defer cancel()
 
 	bid, err := getBidCambio(ctx, "http://localhost:8080/cotacao")
@@ -20,7 +20,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	err = saveCambioToFile(bid, "cotacao.txt")
+	err = saveCambioToFile(bid, constants.caminhoArquivo)
 	if err != nil {
 		log.Fatal(err)
 	}
