@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/NayronFerreira/client-server-api/internal/data"
+	data "github.com/NayronFerreira/client-server-api/internal/data/cambio/sqlite"
 	"github.com/NayronFerreira/client-server-api/internal/service"
 )
 

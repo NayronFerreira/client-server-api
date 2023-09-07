@@ -1,0 +1,3 @@
+package constants
+
+cotacaoFilePath := "../../internal/data/cambio/cotacao/cotaxao.txt"
