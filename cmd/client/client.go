@@ -14,40 +14,63 @@ import (
 func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Millisecond*300)
 	defer cancel()
-	req, err := http.NewRequestWithContext(ctx, "GET", "http://localhost:8080/cotacao", nil)
-	if err != nil {
-		panic(err)
-	}
-	res, err := http.DefaultClient.Do(req)
+
+	bid, err := getBidCambio(ctx, "http://localhost:8080/cotacao")
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.StatusCode != 200 {
-		log.Fatal(res.Status)
-	}
-	resBody, err := io.ReadAll(res.Body)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(string(resBody))
-	defer res.Body.Close()
 
-	var bid CambioUSDBRL
-	err = json.Unmarshal(resBody, &bid)
+	err = saveCambioToFile(bid, "cotacao.txt")
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
-	insertCambioDolarInTheFile(bid.USDBRL.Bid)
 
+	log.Printf("Dólar: %s", bid)
 }
 
-func insertCambioDolarInTheFile(bid string) {
-	arq, err := os.Create("cotacao.txt")
+func getBidCambio(ctx context.Context, url string) (string, error) {
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
-		panic(arq)
+		return "", err
+	}
+
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("HTTP Status: %s", res.Status)
+	}
+
+	resBody, err := io.ReadAll(res.Body)
+	if err != nil {
+		return "", err
+	}
+
+	var cambio CambioUSDBRL
+	err = json.Unmarshal(resBody, &cambio)
+	if err != nil {
+		return "", err
+	}
+
+	return cambio.USDBRL.Bid, nil
+}
+
+func saveCambioToFile(bid, filename string) error {
+	arq, err := os.Create(filename)
+	if err != nil {
+		return err
 	}
 	defer arq.Close()
-	arq.WriteString("Dólar:" + bid)
+
+	_, err = arq.WriteString("Dólar:" + bid)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 type CambioUSDBRL struct {

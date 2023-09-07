@@ -20,7 +20,7 @@ func GetCambioUSDToBRLWithReqContext(ctxReq context.Context, res http.ResponseWr
 }
 
 func getCambioUSDToBRL(ctxReq context.Context) (*entity.CambioUSDBRL, error) {
-	ctx, cancel := context.WithTimeout(ctxReq, time.Millisecond*500)
+	ctx, cancel := context.WithTimeout(ctxReq, time.Millisecond*200)
 	defer cancel()
 	cambioReq, err := http.NewRequestWithContext(ctx, "GET", "https://economia.awesomeapi.com.br/json/last/USD-BRL", nil)
 	if err != nil {
