@@ -5,13 +5,12 @@ import (
 	"database/sql"
 	"time"
 
+	"github.com/NayronFerreira/client-server-api/internal/constants"
 	"github.com/NayronFerreira/client-server-api/internal/domain/entity"
 )
 
-const databaseFilePath string = "../../internal/data/cambio/sqlite/database.db"
-
 func CreateDBConnection() (*sql.DB, error) {
-	database, err := sql.Open("sqlite3", databaseFilePath)
+	database, err := sql.Open("sqlite3", constants.CAMBIO_DB_FILE_PATH)
 	if err != nil {
 		return nil, err
 	}

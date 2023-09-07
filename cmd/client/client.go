@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/NayronFerreira/client-server-api/internal/constants"
 )
 
 func main() {
@@ -20,14 +22,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	const cotacaoFilePath string = "../../internal/data/cambio/cotacao/cotaxao.txt"
-
-	err = saveCambioToFile(bid, cotacaoFilePath)
+	err = saveCambioToFile(bid, constants.COTACAO_FILE_PATH)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Printf("Dólar: %s", bid)
+	log.Printf("Dólar:%s", bid)
 }
 
 func getBidCambio(ctx context.Context, url string) (string, error) {
