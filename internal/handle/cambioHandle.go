@@ -5,14 +5,13 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/NayronFerreira/client-server-api/internal/constants"
 	data "github.com/NayronFerreira/client-server-api/internal/data/cambio/sqlite"
 	"github.com/NayronFerreira/client-server-api/internal/service"
 )
 
-const cotacaoPath = "/cotacao"
-
 func CambioHandle(res http.ResponseWriter, req *http.Request) {
-	if req.URL.Path != cotacaoPath {
+	if req.URL.Path != constants.COTACAO_PATH {
 		http.NotFound(res, req)
 		return
 	}
