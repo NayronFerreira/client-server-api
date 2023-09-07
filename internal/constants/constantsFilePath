@@ -1,5 +1,0 @@
-package constants
-
-const cotacaoFilePath string = "../../internal/data/cambio/cotacao/cotaxao.txt"
-const urlGetCambio string = "https://economia.awesomeapi.com.br/json/last/USD-BRL"
-const databaseFilePath string = "../../internal/data/cambio/sqlite/database.db"
