@@ -20,7 +20,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	cotacaoFilePath := "../../internal/data/cambio/cotacao/cotaxao.txt"
+	var cotacaoFilePath string = "../../internal/data/cambio/cotacao/cotaxao.txt"
 
 	err = saveCambioToFile(bid, cotacaoFilePath)
 	if err != nil {

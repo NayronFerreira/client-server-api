@@ -8,8 +8,10 @@ import (
 	"github.com/NayronFerreira/client-server-api/internal/domain/entity"
 )
 
+var databaseFilePath string = "../../internal/data/cambio/sqlite/database.db"
+
 func CreateDBConnection() (*sql.DB, error) {
-	database, err := sql.Open("sqlite3", "database.db")
+	database, err := sql.Open("sqlite3", databaseFilePath)
 	if err != nil {
 		return nil, err
 	}
