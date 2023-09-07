@@ -9,27 +9,39 @@ import (
 	"github.com/NayronFerreira/client-server-api/internal/service"
 )
 
+const cotacaoPath = "/cotacao"
+
 func CambioHandle(res http.ResponseWriter, req *http.Request) {
-	if req.URL.Path != "/cotacao" {
-		res.WriteHeader(http.StatusNotFound)
+	if req.URL.Path != cotacaoPath {
+		http.NotFound(res, req)
 		return
 	}
+
 	cambioResponse, err := service.GetCambioUSDToBRLWithReqContext(req.Context(), res)
 	if err != nil {
-		log.Println("Falha ao buscar CambioResponse:", err)
+		log.Printf("Falha ao buscar CambioResponse: %v", err)
 		http.Error(res, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
 	database, err := data.CreateDBConnection()
 	if err != nil {
-		log.Print("Falha ao abrir coinexao com database", err)
+		log.Printf("Falha ao abrir conexao com database: %v", err)
+		http.Error(res, err.Error(), http.StatusInternalServerError)
+		return
 	}
 	defer database.Close()
-	data.InsertCambioDB(database, cambioResponse)
-	if err != nil {
-		log.Print("Falha ao salvar cambio Response no database", err)
+
+	if err := data.InsertCambioDB(database, cambioResponse); err != nil {
+		log.Printf("Falha ao salvar cambio Response no database: %v", err)
+		http.Error(res, err.Error(), http.StatusInternalServerError)
+		return
 	}
+
 	res.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(res).Encode(&cambioResponse)
 	res.WriteHeader(http.StatusOK)
+	if err := json.NewEncoder(res).Encode(&cambioResponse); err != nil {
+		log.Printf("Falha ao codificar resposta JSON: %v", err)
+		http.Error(res, err.Error(), http.StatusInternalServerError)
+	}
 }

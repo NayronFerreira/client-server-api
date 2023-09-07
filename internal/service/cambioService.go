@@ -21,7 +21,7 @@ func GetCambioUSDToBRLWithReqContext(ctxReq context.Context, res http.ResponseWr
 }
 
 func getCambioUSDToBRL(ctxReq context.Context) (*entity.CambioUSDBRL, error) {
-	ctx, cancel := context.WithTimeout(ctxReq, time.Millisecond*500)
+	ctx, cancel := context.WithTimeout(ctxReq, time.Millisecond*550)
 	defer cancel()
 	cambioReq, err := http.NewRequestWithContext(ctx, "GET", constants.URL_GET_CAMBIO, nil)
 	if err != nil {

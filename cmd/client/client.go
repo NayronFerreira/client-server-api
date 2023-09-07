@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Millisecond*600)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Millisecond*300)
 	defer cancel()
 
 	bid, err := getBidCambio(ctx, "http://localhost:8080/cotacao")
