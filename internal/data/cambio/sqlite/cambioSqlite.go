@@ -20,7 +20,6 @@ func CreateDBConnection() (*sql.DB, error) {
 
 func NewCambioTableIfNecessary(database *sql.DB) (*sql.DB, error) {
 	_, err := database.Exec(queryCreateCambioTableIfNecessary())
-
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +41,6 @@ func InsertCambioDB(database *sql.DB, cambio *entity.CambioUSDBRL) error {
 		&cambio.USDBRL.Code, &cambio.USDBRL.Codein, &cambio.USDBRL.High, &cambio.USDBRL.Low,
 		&cambio.USDBRL.VarBid, &cambio.USDBRL.PctChange, &cambio.USDBRL.Bid, &cambio.USDBRL.Ask,
 		&cambio.USDBRL.Timestamp, &cambio.USDBRL.CreateDate)
-
 	return err
 }
 
